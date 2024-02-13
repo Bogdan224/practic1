@@ -1,26 +1,27 @@
 #include <stdio.h>
 #define _CRT_SECURE_NO_WARNINGS
 
-bool IsPrimeNumber(int x) {
-	if (x < 1 || x >_CRT_INT_MAX) {
+bool IsPrimeNumber(int x, int y) {
+	if (x < 2) {
 		return false;
 	}
-	if (x == 1 || x == 2) {
+	if (x == 2 || y == 1) {
 		return true;
 	}
-	for (int i = 2; i < x-1; i++) {
-		if (x % i == 0) {
-			return false;
-		}
+	if (x % y != 0) {
+		IsPrimeNumber(x, y-1);
 	}
-	return true;
+	else
+	{
+		return false;
+	}
 }
 
 void Del(int x, int arr[]) {
 	int index = 0;
 	for (int i = x; i >= 1; i--)
 	{
-		if (IsPrimeNumber(i)) {
+		if (IsPrimeNumber(i, i-1)) {
 			if (x % i==0) {
 				arr[index] = i;
 				index += 1;
