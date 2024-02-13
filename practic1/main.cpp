@@ -1,15 +1,17 @@
 #include <stdio.h>
+#include <math.h>
 #define _CRT_SECURE_NO_WARNINGS
 
-bool IsPrimeNumber(int x, int y) {
+//Рекурсивный поиск простого числа
+bool IsPrimeNumber(int x, int y = 2) {
 	if (x < 2) {
 		return false;
 	}
-	if (x == 2 || y == 1) {
+	if (x == 2 || y >= sqrt(x)) {
 		return true;
 	}
 	if (x % y != 0) {
-		IsPrimeNumber(x, y-1);
+		IsPrimeNumber(x, y+1);
 	}
 	else
 	{
@@ -17,11 +19,12 @@ bool IsPrimeNumber(int x, int y) {
 	}
 }
 
+//Добавление всех простых делителей числа x в массив arr по убыванию
 void Del(int x, int arr[]) {
 	int index = 0;
 	for (int i = x; i >= 1; i--)
 	{
-		if (IsPrimeNumber(i, i-1)) {
+		if (IsPrimeNumber(i)) {
 			if (x % i==0) {
 				arr[index] = i;
 				index += 1;
@@ -30,14 +33,19 @@ void Del(int x, int arr[]) {
 	}
 }
 
+//Вывод делителей введенного числа, также проверяет ввод правильных значений
 void Programm() {
 	int x;
 	int arr[100];
-	printf("Enter number more than 0 -------------->>>>>>>");
+	printf("Enter number more than 0 -> ");
 	scanf_s("%d", &x);
 	printf("\n");
-	if (x <= 0) {
-		printf("Wrong number!!!\n");
+	if (x == -858993460) {
+		printf("Wrong value!");
+		return;
+	}
+	else if (x <= 0) {
+		printf("Wrong number!\n");
 		Programm();
 	}
 	else{
